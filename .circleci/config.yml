@@ -13,9 +13,20 @@ format-check:
     - git diff --exit-code
   only:
     changes:
-      - "**/*.{cpp,c,cc,h,hh,hpp,tpp}"
+      - "**/*.{cpp,c,cc,h,hh,hpp,tpp,ino}"
     refs:
         - merge_requests
+        
+.files-triggering-build:
+  only:
+    changes:
+      - "**/*.{cpp,c,cc,fbs,h,hh,hpp,tpp,ino}"
+
+build:
+  extends: .files-triggering-build
+  stage: build
+  artifacts:
+    expire_in: 2 days
 
 orbs:
   # Declare a dependency on the welcome-orb
