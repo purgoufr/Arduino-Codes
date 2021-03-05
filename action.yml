@@ -1,0 +1,29 @@
+name: "clang-format Check"
+description: "Use clang-format to see if your C/C++ code is formatted according to project guidelines."
+
+branding:
+  icon: "check-circle"
+  color: "blue"
+
+inputs:
+  clang-format-version:
+    description: 'The version of clang-format that you want to use.'
+    required: false
+    default: '10'
+  check-path:
+    description: 'The path to the directory you want to check for correct C/C++formatting. Default is the full repository.'
+    required: false
+    default: '.'
+  fallback-style:
+    description: 'The fallback style for clang-format if no .clang-format file exists in your repository.'
+    required: false
+    default: 'llvm'
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    CLANG_FORMAT_VERSION: ${{ inputs.clang-format-version }}
+  args:
+    - ${{ inputs.check-path }}
+    - ${{ inputs.fallback-style }}
